@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: '<https://Epi.Sante.com>',
+    baseURL: 'http://localhost:9090',
     timeout: 1000,
     headers: {'Authorization': 'Bearer yourToken'}
 });

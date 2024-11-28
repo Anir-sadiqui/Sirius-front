@@ -1,0 +1,29 @@
+.page-not-found {
+    text-align: center;
+    margin-top: 100px;
+    font-family: Arial, sans-serif;
+}
+
+.page-not-found h1 {
+    font-size: 120px;
+    color: #ff6b6b;
+    margin: 0;
+}
+
+.page-not-found p {
+    font-size: 20px;
+    color: #555;
+}
+
+.home-link {
+    text-decoration: none;
+    color: #0056b3;
+    font-weight: bold;
+    margin-top: 20px;
+    display: inline-block;
+    transition: color 0.3s;
+}
+
+.home-link:hover {
+    color: #ff6b6b;
+}
