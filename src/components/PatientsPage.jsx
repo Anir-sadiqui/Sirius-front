@@ -63,7 +63,7 @@ const PatientsPage = () => {
 
     return (
         <div className="patients-page">
-            <h1>Patients</h1>
+            <h1>Patientsss</h1>
             <button onClick={() => handleOpenModal('add')} className="add-button">Add Patient</button>
 
             {/* Patients Table */}
