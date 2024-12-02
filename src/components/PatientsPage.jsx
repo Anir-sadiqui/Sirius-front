@@ -5,9 +5,11 @@ import '../styles/styleComponents/PatientsPage.css';
 
 const PatientsPage = () => {
     const [patients, setPatients] = useState([]);
-    const [modalOpen, setModalOpen] = useState(false); // Controls modal visibility
-    const [modalType, setModalType] = useState(''); // 'add' or 'edit'
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalType, setModalType] = useState('');
     const [currentPatient, setCurrentPatient] = useState({ id: '', nom: '', prenom: '', age: '' });
+    const [searchQuery, setSearchQuery] = useState('');
+    const [sortField, setSortField] = useState('id'); // Default sorting field
 
     useEffect(() => {
         fetchPatients();
@@ -61,10 +63,41 @@ const PatientsPage = () => {
             .catch(error => console.error(error));
     };
 
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleSort = () => {
+        const sortedPatients = [...patients].sort((a, b) => {
+            if (sortField === 'id') return a.id - b.id;
+            if (sortField === 'nom') return a.nom.localeCompare(b.nom);
+            if (sortField === 'age') return a.age - b.age;
+            return 0;
+        });
+        setPatients(sortedPatients);
+        setSortField(sortField === 'id' ? 'nom' : sortField === 'nom' ? 'age' : 'id'); // Toggle field
+    };
+
+    const filteredPatients = patients.filter(patient =>
+        `${patient.nom} ${patient.prenom}`.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div className="patients-page">
-            <h1>Patientsss</h1>
-            <button onClick={() => handleOpenModal('add')} className="add-button">Add Patient</button>
+            <h1>Patients</h1>
+            <div className="actions-row">
+                <button onClick={() => handleOpenModal('add')} className="add-button">Add Patient</button>
+                <input
+                    type="text"
+                    placeholder="Search by name"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    className="search-field"
+                />
+                <button onClick={handleSort} className="sort-button">
+                    Sort by {sortField}
+                </button>
+            </div>
 
             {/* Patients Table */}
             <table>
@@ -78,7 +111,7 @@ const PatientsPage = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {patients.map(patient => (
+                {filteredPatients.map(patient => (
                     <tr key={patient.id}>
                         <td>{patient.id}</td>
                         <td>{patient.nom}</td>
