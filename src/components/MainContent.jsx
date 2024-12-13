@@ -15,13 +15,13 @@ const MainContent = () => {
                 </div>
 
                 <div className="card">
-                    <h2>Appointments</h2>
-                    <p>Schedule and manage appointments (Coming Soon).</p>
+                    <h2>Rendez-Vous</h2>
+                    <p>Prendre Votre Rendez-Vous  (Coming Soon).</p>
                 </div>
 
                 <div className="card">
-                    <h2>Doctors</h2>
-                    <p>Manage doctor profiles (Coming Soon).</p>
+                    <h2>Diagnostique</h2>
+                    <p>Fait Votre Diagnostique (Coming Soon).</p>
                 </div>
 
             </div>
