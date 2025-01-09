@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
-import axios from '../axios';
-import '../styles/styleComponents/PatientsPage.css';
+import axios from '../../axios';
+import "./PatientsPage.css";
 
 const PatientsPage = () => {
     const [patients, setPatients] = useState([]);

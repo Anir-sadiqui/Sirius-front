@@ -1,10 +1,10 @@
 import './App.css';
-import Header from './components/Header';
-import MainContent from './components/MainContent.jsx';
-import Footer from './components/Footer.jsx';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import MainContent from './components/Home/MainContent';
+import PageNotFound from './components/PageNotFound/PageNotFound';
+import PatientsPage from './containers/Patient/PatientsPage'; // Adjusted to match your structure
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import PageNotFound from './components/PageNotFound';
-import PatientsPage from './components/PatientsPage'; // Assuming you have this component
 
 function App() {
     return (
