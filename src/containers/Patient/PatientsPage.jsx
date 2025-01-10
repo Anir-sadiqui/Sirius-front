@@ -86,7 +86,7 @@ const PatientsPage = () => {
         <div className="patients-page">
             <h1>Patients</h1>
             <div className="actions-row">
-                <button onClick={() => handleOpenModal('add')} className="add-button">Add Patient</button>
+                {/* <button onClick={() => handleOpenModal('add')} className="add-button">Add Patient</button> */}
                 <input
                     type="text"
                     placeholder="Search by name"

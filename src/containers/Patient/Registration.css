@@ -1,0 +1,99 @@
+/* Center the form on the page */
+.registration-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f9;
+}
+
+form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input:focus, textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+p {
+  text-align: center;
+  color: green;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* Target the main container of your registration form */
+.registration-container {
+  /* Adjust these values as needed */
+  padding-top: 150px; /* Add space below the header */
+  padding-bottom: 180px; /* Add space above the footer */
+  /* Or use margins instead of padding */
+  /* margin-top: 60px; */
+  /* margin-bottom: 60px; */
+  /* ... other styles ... */
+}
+
+/* ... (other styles from above) ... */
+
+/* ... other styles ... */
+
+input, textarea, select { /* Added 'select' to the selector */
+  width: 100%;
+  padding: 12px; /* Changed to match your style */
+  margin: 10px 0; /* Changed to match your style */
+  border: 1px solid #ddd; /* Changed to match your style */
+  border-radius: 5px; /* Changed to match your style */
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* ... other styles ... */
