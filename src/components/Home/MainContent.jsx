@@ -24,6 +24,12 @@ const MainContent = () => {
                     <p>Fait Votre Diagnostique (Coming Soon).</p>
                 </div>
 
+                {/* Add a new card for the Quiz */}
+                <div className="card" onClick={() => window.location.href = '/quiz'}>
+                    <h2>Quick Test</h2>
+                    <p>Take a fun personality test.</p>
+                </div>
+
             </div>
         </main>
     );
