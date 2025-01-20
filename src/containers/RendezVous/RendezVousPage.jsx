@@ -19,7 +19,7 @@ const RendezVousPage = () => {
             id: 2,
             nom: 'Taylor',
             prenom: 'James',
-            specialite: 'Dermatologie',
+            specialite: 'Orthopédie',
             disponibilites: [
                 { jour: '2025-01-16', heure: '10:00 - 11:00' },
                 { jour: '2025-01-15', heure: '11:00 - 12:00' },
