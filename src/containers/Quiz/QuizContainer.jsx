@@ -1,4 +1,3 @@
-// frontend/containers/Quiz/QuizContainer.jsx
 import React, { useState, useEffect } from 'react';
 import axios from '../../axios';
 import Question from '../../components/Quiz/Question';
@@ -55,7 +54,13 @@ function QuizContainer() {
                 await axios.post('/api/quiz/submit-answer', null, {
                     params: { questionId: currentQuestion.id, answer: currentAnswer },
                 });
-                fetchNextQuestion();
+                const hasMoreQuestions = await axios.get('/api/quiz/has-more-questions')
+
+                if(hasMoreQuestions.data) {
+                    fetchNextQuestion()
+                }else {
+                    fetchResult()
+                }
             } catch (error) {
                 console.error('Error submitting answer:', error);
             }
@@ -89,6 +94,7 @@ function QuizContainer() {
                     question={currentQuestion}
                     onAnswerChange={handleAnswerChange}
                     onSubmit={handleSubmitAnswer}
+                    currentAnswer={currentAnswer}
                 />
             )}
 
