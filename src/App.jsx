@@ -4,6 +4,9 @@ import Footer from './components/Footer/Footer';
 import AuthPage from './containers/Patient/AuthPage';
 import Dashboard from './containers/Patient/Dashboard';
 import MainContent from './components/Home/MainContent';
+import PageNotFound from './components/PageNotFound/PageNotFound';
+import PatientsPage from './containers/Patient/PatientsPage'; // Adjusted to match your structure
+import QuizContainer from "./containers/Quiz/QuizContainer.jsx";
 
 const App = () => {
     return (
@@ -13,14 +16,18 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<AuthPage />} />
                     <Route path="/main" element={<MainContent />} />
-                    <Route
-                        path="/dashboard"
+                    <Route path="/dashboard"
                         element={
                             localStorage.getItem('userEmail')
                                 ? <Dashboard />
                                 : <Navigate to="/" replace />
                         }
                     />
+                    {/* Define your routes */}
+                    <Route path="/patients" element={<PatientsPage />} />
+                    <Route path="/quiz" element={<QuizContainer />} /> {/* Route for the Quiz */}
+                    {/* Catch-all route for unmatched paths */}
+                    <Route path="*" element={<PageNotFound />} />
                 </Routes>
                 <Footer />
             </div>
