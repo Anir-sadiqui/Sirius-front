@@ -1,16 +1,11 @@
-import './App.css';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import AuthPage from './containers/Patient/AuthPage';
+import Dashboard from './containers/Patient/Dashboard';
 import MainContent from './components/Home/MainContent';
-import PageNotFound from './components/PageNotFound/PageNotFound';
-import PatientsPage from './containers/Patient/PatientsPage';
-import RegisterForm from './containers/Patient/RegisterForm.jsx';
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Dashboard from "./containers/Patient/Dashboard.jsx";
-import AuthPage from "src/containers/Patient/AuthPage.jsx";
-
-function App() {
+const App = () => {
     return (
         <Router>
             <div className="App">
@@ -18,15 +13,19 @@ function App() {
                 <Routes>
                     <Route path="/" element={<AuthPage />} />
                     <Route path="/main" element={<MainContent />} />
-                    <Route path="/patients" element={<PatientsPage />} />
-                    <Route path="/register" element={<RegisterForm />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="*" element={<PageNotFound />} />
+                    <Route
+                        path="/dashboard"
+                        element={
+                            localStorage.getItem('userEmail')
+                                ? <Dashboard />
+                                : <Navigate to="/" replace />
+                        }
+                    />
                 </Routes>
                 <Footer />
             </div>
         </Router>
     );
-}
+};
 
 export default App;

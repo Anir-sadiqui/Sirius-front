@@ -1,23 +1,28 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { generatePatientBilan, getPatientInfo } from 'src/api/Patient';
-import Modal from './Modal'; // Importez la modale
+import Modal from './Modal';
 import './Dashboard.css';
 
 const Dashboard = () => {
     const [patientInfo, setPatientInfo] = useState(null);
-    const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [isModalOpen, setIsModalOpen] = useState(false); // État pour la modale
-    const [bilanMessage, setBilanMessage] = useState(""); // Message du bilan
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [bilanMessage, setBilanMessage] = useState("");
 
+    const userEmail = localStorage.getItem('userEmail');
 
+    useEffect(() => {
+        if (userEmail) {
+            loadPatientInfo(userEmail);
+        } else {
+            setError("Veuillez vous connecter");
+            window.location.href = '/';
+        }
+    }, []);
 
-    // Charger les informations du patient
     const loadPatientInfo = (email) => {
-
-
         setLoading(true);
         setError("");
 
@@ -26,81 +31,58 @@ const Dashboard = () => {
                 setPatientInfo(response);
             })
             .catch((error) => {
-                console.error("Erreur complète :", error);
-                if (error.response) {
-                    setError(`Erreur ${error.response.status} : ${error.response.data.error}`);
-                } else {
-                    setError("Erreur lors du chargement des informations.");
-                }
+                setError(error.response?.data?.error || "Erreur de chargement");
             })
-            .finally(() => {
-                setLoading(false);
+            .finally(() => setLoading(false));
+    };
+
+    const handleGenerateBilan = () => {
+        generatePatientBilan(userEmail)
+            .then((response) => {
+                setBilanMessage(response.messageBilan);
+                setIsModalOpen(true);
+            })
+            .catch((error) => {
+                setError(error.response?.data?.error || "Erreur de génération");
             });
     };
 
-    // Générer le bilan du patient
-    const handleGenerateBilan = () => {
-        if (patientInfo) {
-            generatePatientBilan(patientInfo.email)
-                .then((response) => {
-                    console.log("Réponse du serveur :", response); // Log la réponse
-                    setBilanMessage(response.messageBilan); // Utiliser messageBilan au lieu de bilan
-                    setIsModalOpen(true); // Ouvrir la modale
-                })
-                .catch((error) => {
-                    console.error("Erreur lors de la génération du bilan :", error);
-                    setError("Erreur lors de la génération du bilan.");
-                });
-        } else {
-            setError("Aucune information de patient chargée.");
-        }
-    };
-
-    // Fermer la modale
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
+    const closeModal = () => setIsModalOpen(false);
 
     return (
         <div className="dashboard">
-            <h2>Patient Dashboard</h2>
-            <div className="email-input">
-                <input
-                    type="email"
-                    placeholder="Entrez l'email du patient"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <button onClick={() => loadPatientInfo(email)} disabled={loading}>
-                    {loading ? "Chargement..." : "Charger les infos"}
-                </button>
-            </div>
-
+            <h2>Tableau de Bord</h2>
             {error && <p className="error-message">{error}</p>}
 
             {loading ? (
-                <p>Chargement en cours...</p>
+                <p>Chargement...</p>
             ) : patientInfo ? (
                 <div className="patient-info">
-                    <p><strong>Nom :</strong> {patientInfo.nom}</p>
-                    <p><strong>Prénom :</strong> {patientInfo.prenom}</p>
-                    <p><strong>Email :</strong> {patientInfo.email}</p>
-                    <p><strong>Téléphone :</strong> {patientInfo.telephone}</p>
-                    <p><strong>Adresse :</strong> {patientInfo.adresse}</p>
-                    <p><strong>Taille :</strong> {patientInfo.taille} cm</p>
-                    <p><strong>Poids :</strong> {patientInfo.poids} kg</p>
-                    <p><strong>Sexe :</strong> {patientInfo.sexe === 'H' ? 'Homme' : 'Femme'}</p>
-                    <p><strong>Âge :</strong> {patientInfo.age} ans</p>
-                    <button onClick={handleGenerateBilan}>Lancer un bilan</button>
+                    <div className="info-grid">
+                        <div><strong>Nom:</strong> {patientInfo.nom}</div>
+                        <div><strong>Prénom:</strong> {patientInfo.prenom}</div>
+                        <div><strong>Email:</strong> {patientInfo.email}</div>
+                        <div><strong>Téléphone:</strong> {patientInfo.telephone}</div>
+                        <div><strong>Adresse:</strong> {patientInfo.adresse}</div>
+                        <div><strong>Taille:</strong> {patientInfo.taille} cm</div>
+                        <div><strong>Poids:</strong> {patientInfo.poids} kg</div>
+                        <div><strong>Sexe:</strong> {patientInfo.sexe === 'H' ? 'Homme' : 'Femme'}</div>
+                        <div><strong>Âge:</strong> {patientInfo.age} ans</div>
+                    </div>
+                    <button onClick={handleGenerateBilan}>Générer Bilan</button>
                 </div>
             ) : (
-                <p>Aucune information de patient chargée.</p>
+                <p>Aucune donnée trouvée</p>
             )}
 
-            {/* Modale pour afficher le bilan */}
             <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <h3>Bilan du patient</h3>
-                <p>{bilanMessage}</p> {/* Afficher le message du bilan */}
+                <h3>Bilan Médical</h3>
+                <div className="bilan-content">
+                    {bilanMessage || "Aucun bilan disponible"}
+                </div>
+                <button className="close-button" onClick={closeModal}>
+                    Fermer
+                </button>
             </Modal>
         </div>
     );

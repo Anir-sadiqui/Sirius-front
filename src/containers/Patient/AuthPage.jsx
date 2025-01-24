@@ -1,10 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import { login, register } from 'src/api/Patient'; // Importez les méthodes API
-import './AuthPage.css'; // Assurez-vous de créer ce fichier CSS
+import { login, register } from 'src/api/Patient';
+import './AuthPage.css';
 
 const AuthPage = () => {
-    const [isLogin, setIsLogin] = useState(true); // Pour basculer entre connexion et inscription
+    const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [nom, setNom] = useState("");
@@ -17,25 +17,20 @@ const AuthPage = () => {
     const [sexe, setSexe] = useState("");
     const [error, setError] = useState("");
 
-    // Fonction pour gérer la connexion
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
         try {
-            const response = await login(email, password);
-            console.log("Connexion réussie :", response);
-            // Stocker l'email dans le localStorage ou un état global (ex: Redux, Context)
+            await login(email, password);
             localStorage.setItem('userEmail', email);
-            // Rediriger vers une autre page (ex: Dashboard)
-            if (login(email, password)) {
-                window.location.href = '/dashboard';
-            }
+            window.location.href = '/main';
+            // eslint-disable-next-line no-unused-vars
         } catch (error) {
-            console.error("Erreur lors de la connexion :", error);
-            setError("Email ou mot de passe incorrect.");
+            setError("Email ou mot de passe incorrect");
         }
     };
 
-    // Fonction pour gérer l'inscription
-    const handleRegister = async () => {
+    const handleRegister = async (e) => {
+        e.preventDefault();
         const patient = {
             nom,
             prenom,
@@ -46,28 +41,24 @@ const AuthPage = () => {
             email,
             telephone,
             sexe,
-            mdp: password, // Assurez-vous que le backend attend "mdp" pour le mot de passe
+            mdp: password,
         };
 
         try {
-            const response = await register(patient);
-            console.log("Inscription réussie :", response);
-            // Stocker l'email dans le localStorage ou un état global
-            localStorage.setItem('userEmail', email);
-            // Rediriger vers une autre page (ex: Dashboard)
-            window.location.href = '/dashboard';
+            await register(patient);
+            setIsLogin(true); // Switch to login form
+            setError(""); // Clear errors
+            setPassword(""); // Clear password field
         } catch (error) {
-            console.error("Erreur lors de l'inscription :", error);
-            setError("Erreur lors de l'inscription. Veuillez réessayer.");
+            setError("Erreur lors de l'inscription: " + error.message);
         }
     };
 
     return (
         <div className="auth-page">
             <div className={`auth-container ${isLogin ? '' : 'switch'}`}>
-                {/* Formulaire de connexion */}
                 {isLogin ? (
-                    <div className="login-form">
+                    <form className="login-form" onSubmit={handleLogin}>
                         <h2>Connexion</h2>
                         {error && <p className="error-message">{error}</p>}
                         <input
@@ -75,21 +66,23 @@ const AuthPage = () => {
                             placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                         />
                         <input
                             type="password"
                             placeholder="Mot de passe"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            required
                         />
-                        <button onClick={handleLogin}>Me connecter</button>
+                        <button type="submit">Me connecter</button>
                         <p>
                             Pas encore inscrit ?{' '}
                             <span onClick={() => setIsLogin(false)}>Créer un compte</span>
                         </p>
-                    </div>
+                    </form>
                 ) : (
-                    <div className="register-form">
+                    <form className="register-form" onSubmit={handleRegister}>
                         <h2>Inscription</h2>
                         {error && <p className="error-message">{error}</p>}
                         <input
@@ -97,51 +90,63 @@ const AuthPage = () => {
                             placeholder="Nom"
                             value={nom}
                             onChange={(e) => setNom(e.target.value)}
+                            required
                         />
                         <input
                             type="text"
                             placeholder="Prénom"
                             value={prenom}
                             onChange={(e) => setPrenom(e.target.value)}
+                            required
                         />
                         <input
                             type="number"
                             placeholder="Âge"
                             value={age}
                             onChange={(e) => setAge(e.target.value)}
+                            required
                         />
                         <input
                             type="number"
                             placeholder="Taille (cm)"
                             value={taille}
                             onChange={(e) => setTaille(e.target.value)}
+                            required
                         />
                         <input
                             type="number"
                             placeholder="Poids (kg)"
                             value={poids}
                             onChange={(e) => setPoids(e.target.value)}
+                            required
                         />
                         <input
                             type="text"
                             placeholder="Adresse"
                             value={adresse}
                             onChange={(e) => setAdresse(e.target.value)}
+                            required
                         />
                         <input
                             type="email"
                             placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                         />
                         <input
                             type="tel"
                             placeholder="Téléphone"
                             value={telephone}
                             onChange={(e) => setTelephone(e.target.value)}
+                            required
                         />
-                        <select value={sexe} onChange={(e) => setSexe(e.target.value)}>
-                            <option value="">Sélectionnez votre sexe</option>
+                        <select
+                            value={sexe}
+                            onChange={(e) => setSexe(e.target.value)}
+                            required
+                        >
+                            <option value="">Sexe</option>
                             <option value="HOMME">Homme</option>
                             <option value="FEMME">Femme</option>
                         </select>
@@ -150,13 +155,14 @@ const AuthPage = () => {
                             placeholder="Mot de passe"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            required
                         />
-                        <button onClick={handleRegister}>S&#39;inscrire</button>
+                        <button type="submit">S'inscrire</button>
                         <p>
                             Déjà inscrit ?{' '}
                             <span onClick={() => setIsLogin(true)}>Se connecter</span>
                         </p>
-                    </div>
+                    </form>
                 )}
             </div>
         </div>
