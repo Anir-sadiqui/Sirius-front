@@ -12,18 +12,11 @@ const Dashboard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); // État pour la modale
     const [bilanMessage, setBilanMessage] = useState(""); // Message du bilan
 
-    // Fonction pour valider l'email
-    const validateEmail = (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    };
+
 
     // Charger les informations du patient
     const loadPatientInfo = (email) => {
-        if (!email || !validateEmail(email)) {
-            setError("Veuillez entrer un email valide.");
-            return;
-        }
+
 
         setLoading(true);
         setError("");

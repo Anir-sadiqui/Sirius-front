@@ -25,7 +25,9 @@ const AuthPage = () => {
             // Stocker l'email dans le localStorage ou un état global (ex: Redux, Context)
             localStorage.setItem('userEmail', email);
             // Rediriger vers une autre page (ex: Dashboard)
-            window.location.href = '/dashboard';
+            if (login(email, password)) {
+                window.location.href = '/dashboard';
+            }
         } catch (error) {
             console.error("Erreur lors de la connexion :", error);
             setError("Email ou mot de passe incorrect.");

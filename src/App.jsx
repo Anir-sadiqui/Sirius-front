@@ -8,6 +8,7 @@ import RegisterForm from './containers/Patient/RegisterForm.jsx';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from "./containers/Patient/Dashboard.jsx";
+import AuthPage from "src/containers/Patient/AuthPage.jsx";
 
 function App() {
     return (
@@ -15,7 +16,8 @@ function App() {
             <div className="App">
                 <Header />
                 <Routes>
-                    <Route path="/" element={<MainContent />} />
+                    <Route path="/" element={<AuthPage />} />
+                    <Route path="/main" element={<MainContent />} />
                     <Route path="/patients" element={<PatientsPage />} />
                     <Route path="/register" element={<RegisterForm />} />
                     <Route path="/dashboard" element={<Dashboard />} />
