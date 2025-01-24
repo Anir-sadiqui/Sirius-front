@@ -1,8 +1,11 @@
 import React from 'react';
 import './MainContent.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const MainContent = () => {
+    const navigate = useNavigate();
+
     return (
         <main className="content">
             <h1>Hello From EpiSante</h1>
@@ -11,12 +14,11 @@ const MainContent = () => {
                 <div className="card" onClick={() => window.location.href = '/patients'}>
                     <h2>Patient Management</h2>
                     <p>View and manage patient records.</p>
-
                 </div>
 
-                <div className="card">
+                <div className="card" onClick={() => navigate('/rendezvous')}>
                     <h2>Rendez-Vous</h2>
-                    <p>Prendre Votre Rendez-Vous  (Coming Soon).</p>
+                    <p>Prendre Votre Rendez-Vous.</p>
                 </div>
 
                 <div className="card">
@@ -29,9 +31,9 @@ const MainContent = () => {
                     <h2>Quick Test</h2>
                     <p>Take a fun personality test.</p>
                 </div>
-
             </div>
         </main>
     );
 };
+
 export default MainContent;
