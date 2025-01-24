@@ -42,3 +42,6 @@ export const register = (patient) => {
             throw error;
         });
 };
+export const generateMockPatients = (count) => {
+    return axios.post(`/api/mock/generate-patients?numberOfPatients=${count}`);
+};

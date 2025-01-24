@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import { login, register } from 'src/api/Patient';
+import { login, register, generateMockPatients } from 'src/api/Patient'; // Importez generateMockPatients
 import './AuthPage.css';
 
 const AuthPage = () => {
@@ -16,6 +16,11 @@ const AuthPage = () => {
     const [telephone, setTelephone] = useState("");
     const [sexe, setSexe] = useState("");
     const [error, setError] = useState("");
+
+    // États pour la génération de patients fictifs
+    const [showModal, setShowModal] = useState(false);
+    const [mockPatients, setMockPatients] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -52,6 +57,34 @@ const AuthPage = () => {
         } catch (error) {
             setError("Erreur lors de l'inscription: " + error.message);
         }
+    };
+
+    // Fonction pour générer des patients fictifs
+    const handleGeneratePatients = async () => {
+        const count = prompt("Combien de patients voulez-vous générer ?");
+        const number = parseInt(count);
+
+        if (isNaN(number) || number < 1 || number > 100) {
+            setError("Veuillez entrer un nombre entre 1 et 100");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const response = await generateMockPatients(number);
+            setMockPatients(response.data);
+            setShowModal(true);
+            setError('');
+        } catch (err) {
+            setError("Erreur lors de la génération des patients");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Fonction pour fermer la modale
+    const handleCloseModal = () => {
+        setShowModal(false);
     };
 
     return (
@@ -162,9 +195,50 @@ const AuthPage = () => {
                             Déjà inscrit ?{' '}
                             <span onClick={() => setIsLogin(true)}>Se connecter</span>
                         </p>
+
+                        {/* Bouton pour générer des patients fictifs */}
+                        <button
+                            type="button"
+                            className="generate-button"
+                            onClick={handleGeneratePatients}
+                            disabled={loading}
+                        >
+                            {loading ? 'Génération...' : 'Générer des patients fictifs'}
+                        </button>
                     </form>
                 )}
             </div>
+
+            {/* Modale pour afficher les patients générés */}
+            {showModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h3>Patients Générés</h3>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Mot de passe</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {mockPatients.map((patient, index) => (
+                                <tr key={index}>
+                                    <td>{patient.email}</td>
+                                    <td>{patient.password}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                        <button
+                            className="close-button"
+                            onClick={handleCloseModal}
+                        >
+                            Fermer
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
