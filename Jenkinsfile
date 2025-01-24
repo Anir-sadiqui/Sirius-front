@@ -9,7 +9,7 @@ pipeline {
 
             stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/Anir-sadiqui/Sirius-front.git'
+                git branch: 'Dev', url: 'https://github.com/Anir-sadiqui/Sirius-front.git'
             }
         }
 
