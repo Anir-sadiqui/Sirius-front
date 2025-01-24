@@ -1,9 +1,13 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import './MainContent.css';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const MainContent = () => {
+    const navigate = useNavigate();
+
     return (
         <main className="content">
             <h1>Hello From EpiSante</h1>
@@ -15,10 +19,17 @@ const MainContent = () => {
 
                 </div>
 
-                <div className="card">
+                <div className="card" onClick={() => navigate('/rendezvous')}>
                     <h2>Rendez-Vous</h2>
-                    <p>Prendre Votre Rendez-Vous  (Coming Soon).</p>
+                    <p>Prendre Votre Rendez-Vous.</p>
                 </div>
+
+                {/* Add a new card for the Quiz */}
+                <div className="card" onClick={() => window.location.href = '/quiz'}>
+                    <h2>Quick Test</h2>
+                    <p>Take a fun personality test.</p>
+                </div>
+
 
                 <div className="card">
                     <h2>Diagnostique</h2>

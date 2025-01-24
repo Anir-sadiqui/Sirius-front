@@ -7,6 +7,7 @@ import MainContent from './components/Home/MainContent';
 import PageNotFound from './components/PageNotFound/PageNotFound';
 import PatientsPage from './containers/Patient/PatientsPage'; // Adjusted to match your structure
 import QuizContainer from "./containers/Quiz/QuizContainer.jsx";
+import RendezVousContainer from "./containers/RendezVous/RendezVousContainer.jsx"
 
 const App = () => {
     return (
@@ -25,8 +26,8 @@ const App = () => {
                     />
                     {/* Define your routes */}
                     <Route path="/patients" element={<PatientsPage />} />
-                    <Route path="/quiz" element={<QuizContainer />} /> {/* Route for the Quiz */}
-                    {/* Catch-all route for unmatched paths */}
+                    <Route path="/quiz" element={<QuizContainer />} />
+                    <Route path="/rendezvous" element={<RendezVousContainer />} />
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
                 <Footer />
