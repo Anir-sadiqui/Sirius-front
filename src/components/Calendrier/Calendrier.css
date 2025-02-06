@@ -1,0 +1,30 @@
+/* Calendrier.css */
+.rbc-event {
+    border-radius: 8px;
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+}
+
+/* Matin (9h-13h) en vert */
+.event-matin {
+    background-color: #4CAF50 !important;
+    color: white !important;
+}
+
+/* Soir (14h-17h) en bleu */
+.event-soir {
+    background-color: #2196F3 !important;
+    color: white !important;
+}
+
+/* Amélioration de l'affichage du calendrier */
+.rbc-calendar {
+    max-width: 100%;
+    margin: auto;
+}
+
+.rbc-time-view {
+    min-height: 400px !important;
+}
