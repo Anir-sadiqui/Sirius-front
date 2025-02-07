@@ -1,30 +1,11 @@
-/* Calendrier.css */
-.rbc-event {
-    border-radius: 8px;
-    padding: 5px;
-    font-weight: bold;
-    text-align: center;
-    border: none;
-}
-
-/* Matin (9h-13h) en vert */
 .event-matin {
-    background-color: #4CAF50 !important;
-    color: white !important;
+    background-color: #b3e0ff !important;
+    color: black !important;
+    border-left: 4px solid #0099ff !important;
 }
 
-/* Soir (14h-17h) en bleu */
 .event-soir {
-    background-color: #2196F3 !important;
-    color: white !important;
-}
-
-/* Amélioration de l'affichage du calendrier */
-.rbc-calendar {
-    max-width: 100%;
-    margin: auto;
-}
-
-.rbc-time-view {
-    min-height: 400px !important;
+    background-color: #ffcccb !important;
+    color: black !important;
+    border-left: 4px solid #ff6666 !important;
 }

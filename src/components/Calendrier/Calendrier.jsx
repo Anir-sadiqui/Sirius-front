@@ -36,7 +36,7 @@ const Calendrier = ({ disponibilites = [] }) => {
                 start: startDate,
                 end: endDate,
                 allDay: false,
-                className: dispo.periode === "MATIN" ? "event-matin" : "event-soir" // ✅ Appliquer la classe CSS
+                className: dispo.periode === "MATIN" ? "event-matin" : "event-soir"
             };
         });
 
